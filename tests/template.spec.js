@@ -1,2 +1,1 @@
-
 test('Template test', async ({}) => {});
