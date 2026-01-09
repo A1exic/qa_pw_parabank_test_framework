@@ -1,5 +1,4 @@
 import { test, Page } from '@playwright/test';
-import { TransferFundsPage } from '../payments/TransferFundsPage';
 
 export async function transferFunds(
   page: Page,
@@ -9,7 +8,6 @@ export async function transferFunds(
   amount: number,
 ) {
   await test.step(`Transfer funds: ${amount}`, async () => {
-    // Логика перевода
     await transferPage.fromAccount.selectOption(from);
     await transferPage.toAccount.selectOption(to);
     await transferPage.amountInput.fill(amount.toString());
@@ -17,9 +15,6 @@ export async function transferFunds(
   });
 }
 
-// Добавляем отсутствующий метод
 export async function verifyTransferValidation(page: Page, transferPage: any) {
-  await test.step('Verify validation message', async () => {
-    // Реализация проверки
-  });
+  await test.step('Verify validation message', async () => {});
 }

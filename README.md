@@ -28,12 +28,12 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-1. Установите зависимости: `npm install`
-2. Запустите тесты: `npx playwright test`
+1. Install dependencies: `npm install`
+2. Execute all tests: `npx playwright test`
 
 
 ## How to generate report
 
-1. Сборка отчета: `npx allure generate allure-results --clean -o allure-report`
-2. Просмотр: `npx allure open allure-report`
+1. Generate Allure results: `npx allure generate allure-results --clean`
+2. Open report: `npx allure open allure-report`
 
