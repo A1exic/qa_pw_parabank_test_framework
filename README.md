@@ -28,8 +28,12 @@ npm install -g allure-commandline
 
 ## How to run the tests
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+1. Установите зависимости: `npm install`
+2. Запустите тесты: `npx playwright test`
+
 
 ## How to generate report
 
-// TODO - It's part of your task to add the appropriate instructions here. 
+1. Сборка отчета: `npx allure generate allure-results --clean -o allure-report`
+2. Просмотр: `npx allure open allure-report`
+
