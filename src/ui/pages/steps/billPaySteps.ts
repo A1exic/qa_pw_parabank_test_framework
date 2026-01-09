@@ -1,33 +1,31 @@
-import { Page, Locator } from '@playwright/test';
+import { Page } from '@playwright/test';
+import { BillPayPage } from '../payments/BillPayPage';
 
-export class BillPayPage {
-  page: Page;
-  payeeName: Locator;
-  address: Locator;
-  city: Locator;
-  state: Locator;
-  zip: Locator;
-  phone: Locator;
-  account: Locator;
-  verify: Locator;
-  amount: Locator;
-  send: Locator;
+interface BillPayData {
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  phone: string;
+  account: string;
+  amount: string;
+}
 
-  constructor(page: Page) {
-    this.page = page;
-    this.payeeName = page.locator('#payeeName');
-    this.address = page.locator('#address');
-    this.city = page.locator('#city');
-    this.state = page.locator('#state');
-    this.zip = page.locator('#zipCode');
-    this.phone = page.locator('#phone');
-    this.account = page.locator('#account');
-    this.verify = page.locator('#verifyAccount');
-    this.amount = page.locator('#amount');
-    this.send = page.locator('input[value="Send Payment"]');
-  }
-
-  async open() {
-    await this.page.goto('https://parabank.parasoft.com/parabank/billpay.htm');
-  }
+export async function payBill(
+  page: Page,
+  billPay: BillPayPage,
+  data: BillPayData,
+) {
+  await billPay.open();
+  await billPay.payeeName.fill(data.name);
+  await billPay.address.fill(data.address);
+  await billPay.city.fill(data.city);
+  await billPay.state.fill(data.state);
+  await billPay.zip.fill(data.zip);
+  await billPay.phone.fill(data.phone);
+  await billPay.account.fill(data.account);
+  await billPay.verify.fill(data.account);
+  await billPay.amount.fill(data.amount);
+  await billPay.send.click();
 }

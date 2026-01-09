@@ -1,18 +1,22 @@
 import { Page } from '@playwright/test';
-export class RequestLoanPage {
-  page: Page;
-  amount: string;
-  downPayment: string;
-  accountFrom: string;
-  applyBtn: string;
-  successMsg: string;
+import { RequestLoanPage } from '../loans/RequestLoanPage';
 
-  constructor(page: Page) {
-    this.page = page;
-    this.amount = '#amount';
-    this.downPayment = '#downPayment';
-    this.accountFrom = '#fromAccountId';
-    this.applyBtn = 'input[value="Apply Now"]';
-    this.successMsg = 'h1:has-text("Loan Request Processed")';
-  }
+interface LoanData {
+  amount: number;
+  downPayment: number;
+  accountFrom: string;
+}
+
+export async function requestLoan(
+  page: Page,
+  loanPage: RequestLoanPage,
+  data: LoanData,
+) {
+  await loanPage.open();
+
+  // Используем локаторы напрямую через Page Object
+  await page.fill(loanPage.amount, data.amount.toString());
+  await page.fill(loanPage.downPayment, data.downPayment.toString());
+  await page.selectOption(loanPage.accountFrom, data.accountFrom);
+  await page.click(loanPage.applyBtn);
 }

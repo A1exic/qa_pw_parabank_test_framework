@@ -25,7 +25,7 @@ test.describe('Authentication - Login', () => {
       });
 
       await test.step('Verify error message', async () => {
-        await expect(page.locator(loginPage.error)).toBeVisible();
+        await expect(loginPage.error).toBeVisible();
       });
     });
   }

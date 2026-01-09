@@ -36,7 +36,7 @@ test.describe('Payments - Bill Pay', () => {
     });
 
     await test.step('Verify success message', async () => {
-      await expect(page.locator(billPayPage.success)).toBeVisible();
+      await expect(billPayPage.success).toBeVisible();
     });
   });
 });
