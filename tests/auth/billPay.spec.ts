@@ -1,42 +1,36 @@
-import { test, expect } from '@playwright/test';
-import { allure } from 'allure-playwright';
-import { Severity } from 'allure-js-commons';
-
-import { LoginPage } from '../../src/ui/pages/auth/LoginPage';
+import { Page } from '@playwright/test';
 import { BillPayPage } from '../../src/ui/pages/payments/BillPayPage';
-import { loginStep } from '../../src/ui/pages/steps/authSteps';
-import { payBill } from '../../src/ui/pages/steps/billPaySteps';
-import { validUser } from '../_fixtures/user.fixture';
 
-test.describe('Payments - Bill Pay', () => {
-  test('Pay bill successfully', async ({ page }) => {
-    allure.parentSuite('Parabank');
-    allure.suite('Payments');
-    allure.subSuite('Bill Pay');
-    allure.severity(Severity.CRITICAL);
+interface BillPayData {
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  phone: string;
+  account: string;
+  amount: string;
+}
 
-    const loginPage = new LoginPage(page);
-    const billPayPage = new BillPayPage(page);
+export async function payBill(
+  page: Page,
+  billPay: BillPayPage,
+  data: BillPayData,
+) {
+  await billPay.open();
 
-    await test.step('Login as valid user', async () => {
-      await loginStep(page, loginPage, validUser);
-    });
+  await billPay.payeeName.fill(data.name);
+  await billPay.address.fill(data.address);
+  await billPay.city.fill(data.city);
+  await billPay.state.fill(data.state);
+  await billPay.zip.fill(data.zip);
+  await billPay.phone.fill(data.phone);
+  await billPay.account.fill(data.account);
+  await billPay.verify.fill(data.account);
+  await billPay.amount.fill(data.amount);
 
-    await test.step('Pay bill', async () => {
-      await payBill(page, billPayPage, {
-        name: 'Test',
-        address: 'Addr',
-        city: 'City',
-        state: 'St',
-        zip: '0000',
-        phone: '555',
-        account: '7777',
-        amount: '10',
-      });
-    });
-
-    await test.step('Verify success message', async () => {
-      await expect(billPayPage.success).toBeVisible();
-    });
-  });
-});
+  await Promise.all([
+    page.waitForLoadState('networkidle'),
+    billPay.send.click(),
+  ]);
+}

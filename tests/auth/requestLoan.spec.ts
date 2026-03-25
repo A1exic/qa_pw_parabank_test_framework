@@ -31,7 +31,7 @@ test.describe('Loans - Request Loan', () => {
     });
 
     await test.step('Verify loan request success', async () => {
-      await expect(page.locator(loanPage.successMsg)).toBeVisible();
+      await expect(loanPage.successMsg).toBeVisible();
     });
   });
 });

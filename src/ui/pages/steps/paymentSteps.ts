@@ -1,20 +1,17 @@
-import { test, Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
+import { TransferFundsPage } from '../payments/TransferFundsPage';
 
 export async function transferFunds(
   page: Page,
-  transferPage: any,
-  from: string,
-  to: string,
+  transferPage: TransferFundsPage,
   amount: number,
 ) {
-  await test.step(`Transfer funds: ${amount}`, async () => {
-    await transferPage.fromAccount.selectOption(from);
-    await transferPage.toAccount.selectOption(to);
-    await transferPage.amountInput.fill(amount.toString());
-    await transferPage.transferBtn.click();
-  });
-}
-
-export async function verifyTransferValidation(page: Page, transferPage: any) {
-  await test.step('Verify validation message', async () => {});
+  await transferPage.open();
+  await page.waitForFunction(
+    () => document.querySelector('#fromAccountId')?.childElementCount > 0,
+  );
+  await transferPage.fromAccount.selectOption({ index: 0 });
+  await transferPage.toAccount.selectOption({ index: 1 });
+  await transferPage.amountInput.fill(amount.toString());
+  await transferPage.transferBtn.click();
 }

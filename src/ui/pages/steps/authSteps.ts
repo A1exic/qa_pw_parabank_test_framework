@@ -2,26 +2,11 @@ import { Page } from '@playwright/test';
 import { LoginPage } from '../auth/LoginPage';
 import { RegisterPage } from '../auth/RegisterPage';
 
-interface User {
-  username: string;
-  password: string;
-}
-
-interface RegisterData {
-  firstName: string;
-  lastName: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  phone: string;
-  ssn: string;
-  username: string;
-  password: string;
-  confirm: string;
-}
-
-export async function loginStep(page: Page, loginPage: LoginPage, user: User) {
+export async function loginStep(
+  page: Page,
+  loginPage: LoginPage,
+  user: { username: string; password: string },
+) {
   await loginPage.open();
   await loginPage.username.fill(user.username);
   await loginPage.password.fill(user.password);
@@ -31,7 +16,19 @@ export async function loginStep(page: Page, loginPage: LoginPage, user: User) {
 export async function registerStep(
   page: Page,
   registerPage: RegisterPage,
-  data: RegisterData,
+  data: {
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    phone: string;
+    ssn: string;
+    username: string;
+    password: string;
+    confirm: string;
+  },
 ) {
   await registerPage.open();
   await registerPage.firstName.fill(data.firstName);

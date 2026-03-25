@@ -1,20 +1,20 @@
-import { Page } from '@playwright/test'; // if using Playwright
+import { Page, Locator } from '@playwright/test';
 
 export class RequestLoanPage {
-  page: Page;
-  amount: string;
-  downPayment: string;
-  accountFrom: string;
-  applyBtn: string;
-  successMsg: string;
+  readonly page: Page;
+  readonly amount: Locator;
+  readonly downPayment: Locator;
+  readonly accountFrom: Locator;
+  readonly applyBtn: Locator;
+  readonly successMsg: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.amount = '#amount';
-    this.downPayment = '#downPayment';
-    this.accountFrom = '#fromAccountId';
-    this.applyBtn = 'input[value="Apply Now"]';
-    this.successMsg = 'h1:has-text("Loan Request Processed")';
+    this.amount = page.locator('#amount');
+    this.downPayment = page.locator('#downPayment');
+    this.accountFrom = page.locator('#fromAccountId');
+    this.applyBtn = page.locator('input[value="Apply Now"]');
+    this.successMsg = page.locator('h1:has-text("Loan Request Processed")');
   }
 
   async open() {

@@ -1,4 +1,4 @@
-export const registerData = {
+export const getRegisterData = () => ({
   firstName: 'Test',
   lastName: 'User',
   address: '123 Main',
@@ -7,7 +7,7 @@ export const registerData = {
   zip: '00000',
   phone: '5555555',
   ssn: '111-22-3333',
-  username: 'testUser' + Date.now(),
+  username: 'testUser12212112',
   password: 'abc123',
   confirm: 'abc123',
-};
+});

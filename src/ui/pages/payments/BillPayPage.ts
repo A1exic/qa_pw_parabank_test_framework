@@ -1,32 +1,35 @@
 import { Page, Locator } from '@playwright/test';
 
 export class BillPayPage {
-  page: Page;
-  payeeName: Locator;
-  address: Locator;
-  city: Locator;
-  state: Locator;
-  zip: Locator;
-  phone: Locator;
-  account: Locator;
-  verify: Locator;
-  amount: Locator;
-  send: Locator;
-  success: Locator;
+  readonly page: Page;
+
+  readonly payeeName: Locator;
+  readonly address: Locator;
+  readonly city: Locator;
+  readonly state: Locator;
+  readonly zip: Locator;
+  readonly phone: Locator;
+  readonly account: Locator;
+  readonly verify: Locator;
+  readonly amount: Locator;
+  readonly send: Locator;
+  readonly success: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.payeeName = page.locator('#payeeName');
-    this.address = page.locator('#address');
-    this.city = page.locator('#city');
-    this.state = page.locator('#state');
-    this.zip = page.locator('#zipCode');
-    this.phone = page.locator('#phone');
-    this.account = page.locator('#account');
-    this.verify = page.locator('#verifyAccount');
-    this.amount = page.locator('#amount');
+
+    this.payeeName = page.locator('input[name="payee.name"]');
+    this.address = page.locator('input[name="payee.address.street"]');
+    this.city = page.locator('input[name="payee.address.city"]');
+    this.state = page.locator('input[name="payee.address.state"]');
+    this.zip = page.locator('input[name="payee.address.zipCode"]');
+    this.phone = page.locator('input[name="payee.phoneNumber"]');
+    this.account = page.locator('input[name="payee.accountNumber"]');
+    this.verify = page.locator('input[name="verifyAccount"]');
+    this.amount = page.locator('input[name="amount"]');
     this.send = page.locator('input[value="Send Payment"]');
-    this.success = page.locator('p:has-text("Bill Payment Complete")');
+
+    this.success = page.locator('text=Bill Payment Complete');
   }
 
   async open() {

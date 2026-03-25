@@ -14,10 +14,11 @@ export class RegisterPage {
   readonly password: Locator;
   readonly confirm: Locator;
   readonly registerBtn: Locator;
+  readonly successMsg: Locator;
+  readonly errorMsg: Locator;
 
   constructor(page: Page) {
     this.page = page;
-
     this.firstName = page.locator('input[name="customer.firstName"]');
     this.lastName = page.locator('input[name="customer.lastName"]');
     this.address = page.locator('input[name="customer.address.street"]');
@@ -30,6 +31,10 @@ export class RegisterPage {
     this.password = page.locator('input[name="customer.password"]');
     this.confirm = page.locator('input[name="repeatedPassword"]');
     this.registerBtn = page.locator('input[value="Register"]');
+    this.successMsg = page.locator('#customerForm p', {
+      hasText: 'created successfully',
+    });
+    this.errorMsg = page.locator('.error');
   }
 
   async open() {
