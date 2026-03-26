@@ -51,7 +51,7 @@ export const test = base.extend<
         await allure.subSuite(subSuite);
       }
 
-      await use('addAllureTestHierarchy'); // Исправлена опечатка в названии
+      await use('addAllureTestHierarchy');
     },
     { scope: 'test', auto: true },
   ],

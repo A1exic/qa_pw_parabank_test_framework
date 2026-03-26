@@ -1,24 +1,25 @@
-import { test, expect } from '@playwright/test';
-import { allure } from 'allure-playwright';
-import { Severity } from 'allure-js-commons';
+import { test } from '@playwright/test';
 import { LoginPage } from '../../src/ui/pages/auth/LoginPage';
 import { TransferFundsPage } from '../../src/ui/pages/payments/TransferFundsPage';
-import { loginStep } from '../../src/ui/pages/steps/authSteps';
-import { transferFunds } from '../../src/ui/pages/steps/paymentSteps';
 import { validUser } from '../_fixtures/user.fixture';
 
 test.describe('Payments - Transfer Funds', () => {
-  test('Transfer funds successfully', async ({ page }) => {
-    allure.parentSuite('Parabank');
-    allure.suite('Payments');
-    allure.subSuite('Transfer Funds');
-    allure.severity(Severity.CRITICAL);
+  let loginPage: LoginPage;
+  let transferPage: TransferFundsPage;
 
-    const loginPage = new LoginPage(page);
-    const transferPage = new TransferFundsPage(page);
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    transferPage = new TransferFundsPage(page);
+    await loginPage.open();
+    await loginPage.login(validUser.username, validUser.password);
+  });
 
-    await loginStep(page, loginPage, validUser);
-    await transferFunds(page, transferPage, 100);
-    await expect(transferPage.successMsg).toBeVisible();
+  test('Transfer funds successfully', async () => {
+    await transferPage.open();
+    await transferPage.selectFromAccount(0);
+    await transferPage.selectToAccount(1);
+    await transferPage.fillAmount('100');
+    await transferPage.clickTransfer();
+    await transferPage.assertTransferSuccessful();
   });
 });

@@ -1,19 +1,31 @@
-import { Page } from '@playwright/test'; // If you’re using Playwright
+import { Page, Locator } from '@playwright/test';
 
 export class ForgotLoginPage {
-  page: Page;
-  ssn: string;
-  findBtn: string;
-  result: string;
+  readonly page: Page;
+  readonly ssn: Locator;
+  readonly findBtn: Locator;
+  readonly result: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.ssn = '#ssn';
-    this.findBtn = 'input[value="Find My Login Info"]';
-    this.result = 'table';
+    this.ssn = page.locator('#ssn');
+    this.findBtn = page.locator('input[value="Find My Login Info"]');
+    this.result = page.locator('table');
   }
 
-  async open() {
-    await this.page.goto('https://parabank.parasoft.com/parabank/lookup.htm');
+  async open(): Promise<void> {
+    await this.page.goto('/parabank/lookup.htm');
+  }
+
+  async fillSsn(ssn: string): Promise<void> {
+    await this.ssn.fill(ssn);
+  }
+
+  async clickFindButton(): Promise<void> {
+    await this.findBtn.click();
+  }
+
+  async assertResultIsVisible(): Promise<void> {
+    await this.result.waitFor({ state: 'visible' });
   }
 }
