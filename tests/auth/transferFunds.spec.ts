@@ -11,7 +11,7 @@ test.describe('Payments - Transfer Funds', () => {
     loginPage = new LoginPage(page);
     transferPage = new TransferFundsPage(page);
     await loginPage.open();
-    await loginPage.login(validUser.username, validUser.password);
+    await loginPage.signIn(validUser.username, validUser.password);
   });
 
   test('Transfer funds successfully', async () => {

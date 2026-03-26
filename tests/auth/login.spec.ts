@@ -12,13 +12,13 @@ test.describe('Authentication - Login', () => {
 
   for (const user of invalidUsers) {
     test(`Login with invalid credentials - ${user.username}`, async () => {
-      await loginPage.login(user.username, user.password);
+      await loginPage.signIn(user.username, user.password);
       await loginPage.assertLoginErrorVisible();
     });
   }
 
   test('Login with valid credentials', async () => {
-    await loginPage.login(validUser.username, validUser.password);
+    await loginPage.signIn(validUser.username, validUser.password);
     await loginPage.assertLoginSuccessful();
   });
 });
