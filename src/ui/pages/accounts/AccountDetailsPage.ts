@@ -1,23 +1,19 @@
 import { Page, Locator } from '@playwright/test';
 
 export class AccountDetailsPage {
-  page: Page;
-  activityTab: Locator;
-  transactionRows: Locator;
-  filterType: Locator;
-  filterBtn: Locator;
+  readonly page: Page;
+  readonly filterType: Locator;
+  readonly filterBtn: Locator;
+  readonly transactionRows: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.activityTab = page.locator('a:text("Account Activity")');
-    this.transactionRows = page.locator('#transactionTable tbody tr');
-    this.filterType = page.locator('#type');
-    this.filterBtn = page.locator('button:text("Filter")');
+    this.filterType = page.locator('#transactionType');
+    this.filterBtn = page.locator('button#filter');
+    this.transactionRows = page.locator('table#transactions tr');
   }
 
-  async open(accountId: string) {
-    await this.page.goto(
-      `https://parabank.parasoft.com/parabank/accountdetails.htm?id=${accountId}`,
-    );
+  async open(accountId: string): Promise<void> {
+    await this.page.goto(`/parabank/accountdetails.htm?id=${accountId}`);
   }
 }

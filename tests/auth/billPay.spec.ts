@@ -1,36 +1,31 @@
-import { Page } from '@playwright/test';
+import { test } from '@playwright/test';
+import { LoginPage } from '../../src/ui/pages/auth/LoginPage';
 import { BillPayPage } from '../../src/ui/pages/payments/BillPayPage';
+import { validUser } from '../_fixtures/user.fixture';
 
-interface BillPayData {
-  name: string;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  phone: string;
-  account: string;
-  amount: string;
-}
+test.describe('Payments - Bill Pay', () => {
+  let loginPage: LoginPage;
+  let billPayPage: BillPayPage;
 
-export async function payBill(
-  page: Page,
-  billPay: BillPayPage,
-  data: BillPayData,
-) {
-  await billPay.open();
+  test.beforeEach(async ({ page }) => {
+    loginPage = new LoginPage(page);
+    billPayPage = new BillPayPage(page);
+    await loginPage.open();
+    await loginPage.signIn(validUser.username, validUser.password);
+  });
 
-  await billPay.payeeName.fill(data.name);
-  await billPay.address.fill(data.address);
-  await billPay.city.fill(data.city);
-  await billPay.state.fill(data.state);
-  await billPay.zip.fill(data.zip);
-  await billPay.phone.fill(data.phone);
-  await billPay.account.fill(data.account);
-  await billPay.verify.fill(data.account);
-  await billPay.amount.fill(data.amount);
-
-  await Promise.all([
-    page.waitForLoadState('networkidle'),
-    billPay.send.click(),
-  ]);
-}
+  test('Pay bill successfully', async () => {
+    await billPayPage.open();
+    await billPayPage.payBill({
+      name: 'Test Payee',
+      address: '123 Main St',
+      city: 'Boston',
+      state: 'MA',
+      zip: '02101',
+      phone: '5551234567',
+      account: '12345',
+      amount: '10',
+    });
+    await billPayPage.assertPaymentSuccessful();
+  });
+});

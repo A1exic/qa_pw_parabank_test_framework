@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class BillPayPage {
   readonly page: Page;
@@ -35,7 +35,7 @@ export class BillPayPage {
     await this.page.goto('/parabank/billpay.htm');
   }
 
-  async fillPayeeDetails(data: {
+  async payBill(data: {
     name: string;
     address: string;
     city: string;
@@ -54,13 +54,10 @@ export class BillPayPage {
     await this.payeeAccountInput.fill(data.account);
     await this.verifyAccountInput.fill(data.account);
     await this.amountInput.fill(data.amount);
-  }
-
-  async clickSendPayment(): Promise<void> {
     await this.sendPaymentButton.click();
   }
 
   async assertPaymentSuccessful(): Promise<void> {
-    await this.successMessage.waitFor({ state: 'visible' });
+    await expect(this.successMessage).toBeVisible();
   }
 }

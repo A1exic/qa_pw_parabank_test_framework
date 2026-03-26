@@ -19,7 +19,7 @@ export class LoginPage {
     await this.page.goto('/parabank/index.htm');
   }
 
-  async login(username: string, password: string): Promise<void> {
+  async signIn(username: string, password: string): Promise<void> {
     await this.username.fill(username);
     await this.password.fill(password);
     await this.loginBtn.click();

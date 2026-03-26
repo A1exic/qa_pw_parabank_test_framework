@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class RegisterPage {
   readonly page: Page;
@@ -31,13 +31,46 @@ export class RegisterPage {
     this.password = page.locator('input[name="customer.password"]');
     this.confirm = page.locator('input[name="repeatedPassword"]');
     this.registerBtn = page.locator('input[value="Register"]');
-    this.successMsg = page.locator('#customerForm p', {
-      hasText: 'created successfully',
-    });
+    this.successMsg = page.locator('p:has-text("Your account was created")');
     this.errorMsg = page.locator('.error');
   }
 
-  async open() {
+  async open(): Promise<void> {
     await this.page.goto('/parabank/register.htm');
+  }
+
+  async registerUser(data: {
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    phone: string;
+    ssn: string;
+    username: string;
+    password: string;
+    confirm: string;
+  }): Promise<void> {
+    await this.firstName.fill(data.firstName);
+    await this.lastName.fill(data.lastName);
+    await this.address.fill(data.address);
+    await this.city.fill(data.city);
+    await this.state.fill(data.state);
+    await this.zip.fill(data.zip);
+    await this.phone.fill(data.phone);
+    await this.ssn.fill(data.ssn);
+    await this.username.fill(data.username);
+    await this.password.fill(data.password);
+    await this.confirm.fill(data.confirm);
+    await this.registerBtn.click();
+  }
+
+  async assertRegistrationSuccessful(): Promise<void> {
+    await expect(this.successMsg).toBeVisible({ timeout: 15000 });
+  }
+
+  async assertRegistrationError(): Promise<void> {
+    await expect(this.errorMsg).toBeVisible();
   }
 }
