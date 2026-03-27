@@ -14,8 +14,6 @@ export class OpenAccountPage {
   }
 
   async open() {
-    await this.page.goto(
-      'https://parabank.parasoft.com/parabank/openaccount.htm',
-    );
+    await this.page.goto('/parabank/openaccount.htm');
   }
 }

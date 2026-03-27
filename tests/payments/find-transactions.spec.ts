@@ -11,13 +11,13 @@ test.describe('Find Transactions', () => {
     loginPage = new LoginPage(page);
     accountDetailsPage = new AccountDetailsPage(page);
     await loginPage.open();
-    await loginPage.login(validUser.username, validUser.password);
+    await loginPage.signIn(validUser.username, validUser.password);
   });
 
   test('Find transaction by amount', async ({ page }) => {
     await accountDetailsPage.open('12345');
-    await accountDetailsPage.filterType.selectOption('DEBIT');
-    await accountDetailsPage.filterBtn.click();
+    await accountDetailsPage.filterByType.selectOption('DEBIT');
+    await accountDetailsPage.filterButton.click();
     await expect(accountDetailsPage.transactionRows.first()).toBeVisible();
   });
 });
