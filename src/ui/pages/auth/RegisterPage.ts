@@ -12,7 +12,7 @@ export class RegisterPage {
   readonly ssnField: Locator;
   readonly usernameField: Locator;
   readonly passwordField: Locator;
-  readonly confirm: Locator;
+  readonly confirmbutton: Locator;
   readonly registerBtn: Locator;
   readonly successMsg: Locator;
   readonly errorMsg: Locator;
@@ -29,7 +29,7 @@ export class RegisterPage {
     this.ssnField = page.locator('input[name="customer.ssn"]');
     this.usernameField = page.locator('input[name="customer.username"]');
     this.passwordField = page.locator('input[name="customer.password"]');
-    this.confirm = page.locator('input[name="repeatedPassword"]');
+    this.confirmbutton = page.locator('input[name="repeatedPassword"]');
     this.registerBtn = page.locator('input[value="Register"]');
     this.successMsg = page.locator('p:has-text("Your account was created")');
     this.errorMsg = page.locator('.error');
@@ -62,7 +62,7 @@ export class RegisterPage {
     await this.ssnField.fill(data.ssn);
     await this.usernameField.fill(data.username);
     await this.passwordField.fill(data.password);
-    await this.confirm.fill(data.confirm);
+    await this.confirmbutton.fill(data.confirm);
     await this.registerBtn.click();
   }
 

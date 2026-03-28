@@ -26,6 +26,6 @@ export class ForgotLoginPage {
   }
 
   async assertResultIsVisible(): Promise<void> {
-    await this.resultTable.waitFor({ state: 'visible' });
+    await this.resultTable.waitFor();
   }
 }

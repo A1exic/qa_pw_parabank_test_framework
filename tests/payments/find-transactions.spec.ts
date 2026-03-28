@@ -3,7 +3,7 @@ import { LoginPage } from '../../src/ui/pages/auth/LoginPage';
 import { AccountDetailsPage } from '../../src/ui/pages/accounts/AccountDetailsPage';
 import { validUser } from '../_fixtures/user.fixture';
 
-test.describe('Find Transactions', () => {
+test.describe('Transactions', () => {
   let loginPage: LoginPage;
   let accountDetailsPage: AccountDetailsPage;
 
@@ -14,10 +14,9 @@ test.describe('Find Transactions', () => {
     await loginPage.signIn(validUser.username, validUser.password);
   });
 
-  test('Find transaction by amount', async ({ page }) => {
+  test('should be possible to find by amount', async ({ page }) => {
     await accountDetailsPage.open('12345');
-    await accountDetailsPage.filterByType.selectOption('DEBIT');
-    await accountDetailsPage.filterButton.click();
-    await expect(accountDetailsPage.transactionRows.first()).toBeVisible();
+    await accountDetailsPage.filterByType('DEBIT');
+    await accountDetailsPage.assertTransactionVisible();
   });
 });
